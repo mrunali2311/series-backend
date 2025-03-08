@@ -1,7 +1,9 @@
-  const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-require("dotenv").config();
+ import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const authRoutes = require("./routes/authRoutes"); // FIXED
 
