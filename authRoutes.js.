@@ -50,3 +50,8 @@ router.post("/login", async (req, res) => {
 });
 
 module.exports = router;
+
+
+git add routes/authRoutes.js
+git commit -m "Added missing authRoutes file"
+git push origin main
