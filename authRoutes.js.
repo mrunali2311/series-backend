@@ -1,7 +1,8 @@
-const express = require("express");
+ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+require("dotenv").config(); // Ensure environment variables are loaded
 
 const router = express.Router();
 
@@ -10,14 +11,12 @@ router.post("/signup", async (req, res) => {
   try {
     const { name, phone, password } = req.body;
 
-    // Check if the user already exists
+    // Check if user exists
     let user = await User.findOne({ phone });
     if (user) return res.status(400).json({ message: "User already exists" });
 
-    // Hash the password
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create a new user
     user = new User({ name, phone, password: hashedPassword });
     await user.save();
 
@@ -32,18 +31,16 @@ router.post("/login", async (req, res) => {
   try {
     const { phone, password } = req.body;
 
-    // Find user by phone number
+    // Find user
     const user = await User.findOne({ phone });
     if (!user) return res.status(400).json({ message: "Invalid phone or password" });
 
-    // Compare passwords
+    // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid phone or password" });
 
-    // Generate a token
-    
-
-const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    // Generate token
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
     res.json({ message: "Login successful", token });
   } catch (error) {
@@ -52,10 +49,3 @@ const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7
 });
 
 module.exports = router;
-
-
-git add routes/authRoutes.js
-git commit -m "Added missing authRoutes file"
-git push origin main
-
-/routes/authRoutes.js
