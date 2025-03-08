@@ -9,4 +9,10 @@
   "dependencies": {
     "express": "^4.18.2"
   }
+
+
+
+"dependencies": {
+  "mongoose": "^7.0.0"
+}
 }
