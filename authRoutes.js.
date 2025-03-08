@@ -41,7 +41,9 @@ router.post("/login", async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: "Invalid phone or password" });
 
     // Generate a token
-    const token = jwt.sign({ id: user._id }, "secretKey", { expiresIn: "7d" });
+    
+
+const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
     res.json({ message: "Login successful", token });
   } catch (error) {
