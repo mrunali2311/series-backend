@@ -1,11 +1,16 @@
- import express from "express";
+import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
+
+
+
+
 dotenv.config();
 
-const authRoutes = require("./routes/authRoutes"); // FIXED
+import authRoutes from "./routes/authRoutes.js";
+
 
 const app = express();
 app.use(express.json());
