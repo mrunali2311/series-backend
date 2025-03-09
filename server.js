@@ -4,11 +4,12 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import seriesRoutes from "./routes/seriesRoutes.js";
 
-dotenv.config(); // Load environment variables before using them
+dotenv.config(); // Load environment variables
 
-const mongoURI = process.env.MONGO_URI;
-const jwtSecret = process.env.JWT_SECRET;
-const PORT = process.env.PORT || 5000; // Make sure PORT is correctly used
+const PORT = process.env.PORT || 5000;
+
+// Database Connection
+connectDB();
 
 const app = express();
 
@@ -19,7 +20,4 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/series", seriesRoutes);
 
-// Database Connection
-connectDB();
-
-app.listen(PORT, () => console.log(`Server running on
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
