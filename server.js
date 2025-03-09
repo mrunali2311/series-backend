@@ -1,23 +1,36 @@
-  import express from "express";
-import dotenv from "dotenv";
-import connectDB from "./config/db.js";
-import authRoutes from "./routes/authRoutes.js";
-import seriesRoutes from "./routes/seriesRoutes.js";
-
-dotenv.config(); // Load environment variables
-
-const PORT = process.env.PORT || 5000;
-
-// Database Connection
-connectDB();
+ const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
+const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
+app.use(cors());
 
-// Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/series", seriesRoutes);
+// MongoDB Connection
+const mongoURI = process.env.MONGO_URI || "your-mongodb-connection-string-here";
+mongoose
+  .connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Default Route
+app.get("/", (req, res) => {
+  res.send("Server is running! Welcome to Series Backend.");
+});
+
+// Sample API Route
+app.get("/api/series", (req, res) => {
+  res.json({ message: "List of series will be here." });
+});
+
+// Start the Server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
